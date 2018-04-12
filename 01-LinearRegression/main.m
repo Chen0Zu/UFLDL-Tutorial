@@ -3,7 +3,7 @@ clc;clear;
 addpath(genpath('../minFunc_2012'));
 rng(1);
 
-check_grad = true;
+% check_grad = true;
 check_grad = false;
 
 data = load('housing.data');
@@ -15,6 +15,7 @@ trainX = data(1:400,1:end-1);
 trainY = data(1:400,end);
 testX = data(401:end,1:end-1);
 testY = data(401:end,end);
+% save('house','trainX','trainY','testX','testY');
 
 [m,d] = size(trainX);
 w = rand(d,1);
