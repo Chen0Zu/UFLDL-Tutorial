@@ -4,6 +4,7 @@ addpath('../common');
 rng(1);
 %%
 plot_sigmoid = false;
+plot_sigmoid = true;
 if plot_sigmoid
     x = -10:0.1:10;
     plot(x,sigmoid(x));
@@ -12,6 +13,7 @@ end
 %%
 binary_digits = true;
 [train,test] = ex1_load_mnist(binary_digits);
+save('mnist.mat','train','test');
 n_train = size(train.X,2);
 n_test = size(test.X,2);
 d = size(train.X,1);
