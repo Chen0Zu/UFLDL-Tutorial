@@ -1,6 +1,7 @@
 function main
 clear;clc;
 addpath('../common');
+rng(1);
 %%
 plot_sigmoid = false;
 if plot_sigmoid
@@ -27,11 +28,7 @@ if check_grad
     wTest = w;
     X = train.X(:,1:10);
     y = train.y(1:10);
-
-%     wTest = randn(3,1);
-%     X = randn(3,10);
-%     y = [0 1 0 1 0 0 1 0 1 0];
-%     
+   
     fprintf('Testing gradient using forward-differencing...\n');
     order = 1;
     derivativeCheck(@logistic_regression,wTest,order,1,X,y);
@@ -73,14 +70,5 @@ function [f,g] = logistic_regression(w,X,y)
 
 f = -sum(y.*log(sigmoid(w'*X)) + (1-y).*log(1-sigmoid(w'*X)));
 g = X*(sigmoid(w'*X)-y)';
-
-% [d,n] = size(X);
-% f = 0;
-% g = zeros(d,1);
-% for i = 1:n
-%     f = f + y(i)*log(sigmoid(w'*X(:,i))) + (1-y(i))*log(1-sigmoid(w'*X(:,i)));
-%     g = g + X(:,i)*(sigmoid(w'*X(:,i)) - y(i));
-% end
-% f = -f;
 
 end
