@@ -1,4 +1,3 @@
-function main
 clear;clc;
 addpath('../common');
 rng(1);
@@ -31,6 +30,7 @@ if check_grad
     X = train.X(:,1:10);
     y = train.y(1:10);
    
+    ave_error = grad_check(@logistic_regression,wTest,X,y);
     fprintf('Testing gradient using forward-differencing...\n');
     order = 1;
     derivativeCheck(@logistic_regression,wTest,order,1,X,y);
@@ -62,7 +62,6 @@ acc_test = mean(y_test == test.y);
 
 fprintf('Training accuracy %f\n', acc_train);
 fprintf('Testing accuracy %f\n', acc_test);
-end
 
 function h = sigmoid(z)
 h = 1./(1+exp(-z));
