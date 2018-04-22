@@ -3,14 +3,29 @@ addpath(genpath('../minFunc_2012'));
 addpath('../common');
 rng(1);
 
-test = [1 1 1 0 0; 0 1 1 1 0; 0 0 1 1 1; 0 0 1 1 0; 0 1 1 0 0];
-W = [1 0 1; 0 1 0; 1 0 1];
-f = cnnConvolve(test,W);
 
 %%
+function f = sigmoid(x)
+f = 1./(1+exp(-x));
+end
 
-function f = cnnConvolve(image, W)
-% Flip W for use in conv2
-W = rot90(W,2);
-f = conv2(image,W,'valid');
+function convFeature = cnnConvolve(filterDim, nFilters,images, W, b)
+nImages = size(images,3);
+imageDim = size(images,1);
+convDim = imageDim - filterDim + 1;
+
+convFeature = zeros(convDim, convDim, nFilters, nImages);
+
+for iImage = 1:nImages
+    for iFilter = 1:nFilters
+        image = images(:,:,iImage);
+        filter = W(:,:,iFilter);
+        % Flip W for use in conv2
+        filter = rot90(filter,2);
+        convImage = conv2(image,filter,'valid');
+        convFeature(:,:,iFilter,iImage) = ...
+            sigmoid(convImage + b(iFilter));
+    end
+end
+
 end
