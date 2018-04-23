@@ -29,3 +29,6 @@ for iImage = 1:nImages
 end
 
 end
+
+function f = cnnPool()
+end
