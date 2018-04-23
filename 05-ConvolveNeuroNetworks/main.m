@@ -30,5 +30,19 @@ end
 
 end
 
-function f = cnnPool()
+function poolFeature = cnnPool(poolDim, convFeature)
+
+[~,convDim,nFilters,nImages] = size(convFeature);
+poolFeature = zeros(convDim/poolDim,convDim/poolDim,nFilters,nImages);
+
+filter = ones(poolDim);
+for iImage = 1:nImages
+    for iFilter = 1:nFilters
+        fea = convFeature(:,:,iFilter,iImage);
+        poolfea = conv2(fea,filter,'valid');
+        poolfea = poolfea(1:poolDim:end,1:poolDim:end)/(poolDim*poolDim);
+        poolFeature(:,:,iFilter,iImage) = poolfea;
+    end
+end
+
 end
